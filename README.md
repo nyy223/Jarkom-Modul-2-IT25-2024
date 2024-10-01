@@ -113,6 +113,13 @@ iface eth0 inet static
 - Tes di node lain apakah berhasil, disini kami mencoba di node Bedahulu
 ![no 1 sriwijaya (4)](https://github.com/user-attachments/assets/3a0b51b4-3aaa-4231-8d7d-bad347e4f699)
 
+### Membuat Majapahit menjadi DNS Slave
+- Install Bind9 seperti Sriwijaya
+- Perbedaan terdapat pada konfigurasi /etc/bind/named.conf.local
+![no 1 majapahit(2)](https://github.com/user-attachments/assets/92b920ec-3154-4f66-9cfd-5f405065f5da)
+- Tes dengan mematikan service Bind9 di Sriwijaya lalu coba lakukan dig di node yang berbeda. Disini kami sudah mematikan Bind9 di Sriwijaya dan mencoba dig di node Bedahulu
+![no 1 majapahit (4)](https://github.com/user-attachments/assets/5416f5ad-c6d5-434b-8417-0208b5b8cdfd)
+
 
 
 
