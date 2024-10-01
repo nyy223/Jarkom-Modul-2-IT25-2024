@@ -106,4 +106,42 @@ iface eth0 inet static
 ![image](https://github.com/user-attachments/assets/34ef6ca7-3b38-47f1-b70c-4cc4d9267a91)
 
 ## No. 2
+### Membuat domain yang mengarah ke solok
+- Membuat script untuk konfigurasi seperti berikut:
+```
+tulis sini scriptnya terus jelasin y
+```
+- Jalankan script
+![image](https://github.com/user-attachments/assets/856159df-2107-464c-b6fd-ec73a7e0f58d)
+- Tes di client
+![image](https://github.com/user-attachments/assets/f3ca19fe-1ec2-40a0-8466-0f911b437693)
+
+## No. 3
+### Membuat domain yang mengarah ke Kotanigga
+- Membuat script konfigurasi seperti berikut:
+```
+awoakwoka
+```
+- Jalankan Script
+![image](https://github.com/user-attachments/assets/a3f50213-24cd-4a4d-aea5-09fad755cb88)
+- Tes di client
+![image](https://github.com/user-attachments/assets/d91a388c-6b2f-43db-917d-1b4d03b1463b)
+
+## No. 4
+### Membuat domain yang mengarah ke Tanjungkulai
+- Membuat konfigurasi seperti berikut:
+```
+jelasin yy
+```
+- Jalankan script
+![image](https://github.com/user-attachments/assets/cec606d6-da17-47ca-94a3-247006ca2e85)
+- Tes di client
+![image](https://github.com/user-attachments/assets/fafea9b7-14c9-4aca-8e8a-d5873870f2eb)
+
+## No. 5
+### Semua client sudah di tes di nomor 2,3, dan 4 dan berhasil melakukan ping
+
+
+
+
 
