@@ -230,6 +230,60 @@ service bind9 restart
 ## No. 5
 ### Semua client sudah di tes di nomor 2,3, dan 4 dan berhasil melakukan ping
 
+## No. 6
+### Buat script untuk membuat reverse DNS mengakses domain pasopati.it25.com melalui alamat IP 10.76.1.6
+```
+#!/bin/bash
+
+# Buat reverse DNS (Record PTR)
+echo 'zone "1.76.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/jarkom/1.76.10.in-addr.arpa";
+};' >> /etc/bind/named.conf.local
+
+cp /etc/bind/db.local /etc/bind/jarkom/1.76.10.in-addr.arpa
+
+echo ';
+; BIND data file for local loopback interface
+;
+$TTL 604800
+@    IN    SOA    pasopati.it25.com. root.pasopati.it25.com. (
+        2024050301    ; Serial
+        604800        ; Refresh
+        86400        ; Retry
+        2419200      ; Expire
+        604800 )     ; Negative Cache TTL
+;
+@    IN    NS    pasopati.it25.com.
+6    IN    PTR   pasopati.it25.com.' > /etc/bind/jarkom/1.76.10.in-addr.arpa
+
+service bind9 restart
+```
+
+### Buat script untuk ditaruh di semua client
+```
+#!/bin/bash
+
+# Set nameserver kembali ke IP Master
+echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+
+# Install package dnsutils
+apt-get update
+apt-get install dnsutils -y
+
+# Kembalikan nameserver ke IP Master & Slave
+echo '
+nameserver 10.76.1.2
+nameserver 10.76.2.2' > /etc/resolv.conf
+```
+
+### Test di client
+```
+host -t PTR 10.76.1.6
+```
+
+### Hasil di client
+![Screenshot 2024-10-01 225451](https://github.com/user-attachments/assets/6468eb8b-ae55-4924-9698-7091e098c054)
 
 
 
