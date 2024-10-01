@@ -112,7 +112,7 @@ iface eth0 inet static
 tulis sini scriptnya terus jelasin y
 ```
 - Jalankan script
-![image](https://github.com/user-attachments/assets/856159df-2107-464c-b6fd-ec73a7e0f58d)
+![image](https://github.com/user-attachments/assets/8544bcce-dee1-4422-b149-47a791f7505c)
 - Tes di client
 ![image](https://github.com/user-attachments/assets/f3ca19fe-1ec2-40a0-8466-0f911b437693)
 
@@ -123,7 +123,7 @@ tulis sini scriptnya terus jelasin y
 awoakwoka
 ```
 - Jalankan Script
-![image](https://github.com/user-attachments/assets/a3f50213-24cd-4a4d-aea5-09fad755cb88)
+![image](https://github.com/user-attachments/assets/2719aecd-2a6f-4604-8f09-fda9e466a5ba)
 - Tes di client
 ![image](https://github.com/user-attachments/assets/d91a388c-6b2f-43db-917d-1b4d03b1463b)
 
@@ -134,7 +134,7 @@ awoakwoka
 jelasin yy
 ```
 - Jalankan script
-![image](https://github.com/user-attachments/assets/cec606d6-da17-47ca-94a3-247006ca2e85)
+![image](https://github.com/user-attachments/assets/d217b26d-ad8a-4d8e-9c3e-f3ef5683d208)
 - Tes di client
 ![image](https://github.com/user-attachments/assets/fafea9b7-14c9-4aca-8e8a-d5873870f2eb)
 
