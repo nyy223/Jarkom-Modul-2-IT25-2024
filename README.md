@@ -9,6 +9,7 @@
 ## Pembuatan Topologi
 ![Screenshot 2024-10-01 112926](https://github.com/user-attachments/assets/5a11cd09-9ea6-4940-947d-8b80714efaf3)
 
+## Konfigurasi
 ```
 --Nusantara--
 auto eth0
@@ -94,6 +95,7 @@ iface eth0 inet static
 ```
 
 ## No. 1
+Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya membuat dua kotanya menjadi web server yaitu Tanjungkulai, dan Bedahulu, serta Sriwijaya sendiri akan menjadi DNS Master. Kemudian karena merasa terdesak, Majapahit memberikan bantuan dan menjadikan kerajaannya (Majapahit) menjadi DNS Slave. 
 ### Membuat Tanjungkulai dan Bedahulu menjadi webserver
 #### Tanjungkulai dan Bedahulu
 - Install apache2 melalui .bashrc
@@ -109,7 +111,36 @@ iface eth0 inet static
 ### Membuat domain yang mengarah ke solok
 - Membuat script untuk konfigurasi seperti berikut:
 ```
-tulis sini scriptnya terus jelasin y
+#!/bin/bash
+apt update
+apt install bind9 -y
+
+echo 'zone "sudarsana.it25.com" {
+	type master;
+	file "/etc/bind/jarkom/sudarsana.it25.com";
+};' > /etc/bind/named.conf.local
+
+mkdir /etc/bind/jarkom
+
+cp /etc/bind/db.local /etc/bind/jarkom/sudarsana.it25.com
+
+echo '
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     sudarsana.it25.com. sudarsana.it25.com. (
+                        2024100104      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      sudarsana.it25.com.
+@       IN      A       10.76.2.3    ; IP Solok
+www     IN      CNAME   sudarsana.it25.com.' > /etc/bind/jarkom/sudarsana.it25.com
+
+service bind9 restart
 ```
 - Jalankan script
 ![image](https://github.com/user-attachments/assets/8544bcce-dee1-4422-b149-47a791f7505c)
@@ -117,10 +148,39 @@ tulis sini scriptnya terus jelasin y
 ![image](https://github.com/user-attachments/assets/f3ca19fe-1ec2-40a0-8466-0f911b437693)
 
 ## No. 3
-### Membuat domain yang mengarah ke Kotanigga
+### Membuat domain yang mengarah ke Kotalingga
 - Membuat script konfigurasi seperti berikut:
 ```
-awoakwoka
+#!/bin/bash
+apt update
+apt install bind9 -y
+
+echo 'zone "pasopati.it25.com" {
+	type master;
+	file "/etc/bind/jarkom/pasopati.it25.com";
+};' > /etc/bind/named.conf.local
+
+mkdir /etc/bind/jarkom
+
+cp /etc/bind/db.local /etc/bind/jarkom/pasopati.it25.com
+
+echo '
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     pasopati.it25.com. pasopati.it25.com. (
+                        2024100104      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      pasopati.it25.com.
+@       IN      A       10.76.1.6    ; IP Kotalingga
+www     IN      CNAME   pasopati.it25.com.' > /etc/bind/jarkom/pasopati.it25.com
+
+service bind9 restart
 ```
 - Jalankan Script
 ![image](https://github.com/user-attachments/assets/2719aecd-2a6f-4604-8f09-fda9e466a5ba)
@@ -131,7 +191,36 @@ awoakwoka
 ### Membuat domain yang mengarah ke Tanjungkulai
 - Membuat konfigurasi seperti berikut:
 ```
-jelasin yy
+#!/bin/bash
+apt update
+apt install bind9 -y
+
+echo 'zone "rujapala.it25.com" {
+	type master;
+	file "/etc/bind/jarkom/rujapala.it25.com";
+};' > /etc/bind/named.conf.local
+
+mkdir /etc/bind/jarkom
+
+cp /etc/bind/db.local /etc/bind/jarkom/rujapala.it25.com
+
+echo '
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     rujapala.it25.com. rujapala.it25.com. (
+                        2024100104      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      rujapala.it25.com.
+@       IN      A       10.76.1.4    ; IP Tanjungkulai
+www     IN      CNAME   rujapala.it25.com.' > /etc/bind/jarkom/rujapala.it25.com
+
+service bind9 restart
 ```
 - Jalankan script
 ![image](https://github.com/user-attachments/assets/d217b26d-ad8a-4d8e-9c3e-f3ef5683d208)
