@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/51a76ef5-8f20-433b-89fd-e3ff3a2e9b66)![image](https://github.com/user-attachments/assets/228fa198-64c4-46b6-bb64-4c984a2aa01d)![image](https://github.com/user-attachments/assets/e4379db1-bfe2-4506-89b7-8794d85fabd7)# Jarkom-Modul-2-IT25-2024
+# Jarkom-Modul-2-IT25-2024
 
 # Anggota Kelompok
 | Nama  | NRP  |
