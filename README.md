@@ -92,3 +92,11 @@ iface eth0 inet static
 	netmask 255.255.255.0
 	gateway 10.76.1.1
 ```
+
+## No. 1
+
+### Membuat Tanjungkulai dan Bedahulu menjadi web server
+Cukup dengan menginstall apache di kedua node
+![no 1 tanjungkulai (2)](https://github.com/user-attachments/assets/a4a26759-77c3-42ea-8d57-01a928c43eda)
+![no 1 bedahulu (2)](https://github.com/user-attachments/assets/0d4f0b92-0646-46c3-a868-7bef68f49cc5)
+
