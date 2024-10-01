@@ -94,6 +94,10 @@ iface eth0 inet static
 ```
 
 ## No. 1
+### Membuat Tanjungkulai dan Bedahulu menjadi webserver
+- Menginstall apache2 dan melakukan start setiap kali node dinyalakan
+![image](https://github.com/user-attachments/assets/bc08471b-b78a-44cf-a3c7-a2a6430c868e)
+- Script disimpan di /root/.bashrc agar secara otomatis di run saat node dinyalakan
 
 
 
