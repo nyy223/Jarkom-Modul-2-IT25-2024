@@ -403,6 +403,7 @@ service bind9 restart
 ### Lakukan pengetesan pada client dengan ping panah.pasopati.1t25.com
 ![Screenshot 2024-10-02 153914](https://github.com/user-attachments/assets/ac76113d-c4f1-4684-932b-071312acec01)
 ![Screenshot 2024-10-02 154033](https://github.com/user-attachments/assets/b8ea72a0-6087-4d4c-bb9d-187d0c99ff79)
+![image](https://github.com/user-attachments/assets/13df629e-7c15-43d1-95be-3828b8b95828)
 
 
 
