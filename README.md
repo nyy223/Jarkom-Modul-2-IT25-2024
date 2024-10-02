@@ -487,6 +487,56 @@ service bind9 restart
 ![image](https://github.com/user-attachments/assets/464361ce-4995-46d7-bd03-bf4e92d43994)
 ![image](https://github.com/user-attachments/assets/4e3d977b-c0f9-481e-9da1-065babcabc7f)
 
+soal 12
+![image](https://github.com/user-attachments/assets/049c151c-1174-4495-91c3-f7b6a8ef7bc9)
+
+
+soal 13
+![Screenshot 2024-10-02 225728](https://github.com/user-attachments/assets/d79f5cd2-1a20-4ea7-801b-cd3fbc0a4d73)
+![Screenshot 2024-10-02 225743](https://github.com/user-attachments/assets/4d569421-861e-4c52-a3f6-4e1e45766f77)
+![Screenshot 2024-10-02 225757](https://github.com/user-attachments/assets/c5e15094-b8b9-498f-95ac-044afa68941c)
+
+## No. 14
+### Membuat script untuk Solok berisi:
+- Mengentikan apache2
+- Menginstall Nginx
+- Memasukkan config ke nginx/sites-available
+- Melakukan simlink dengan file konfigurasi dan menghapus default
+>Jarkom14.sh
+```
+service apache2 stop
+apt-get update
+apt-get install nginx -y
+
+echo "upstream backend {
+    server 10.76.1.4;
+    server 10.76.1.5;
+    server 10.76.1.6
+}
+
+server {
+    listen 80;
+    server_name solok.it25.com www.solok.it25.com;
+
+    location / {
+        proxy_pass http://backend;
+    }
+}
+" > /etc/nginx/sites-available/jarkom
+
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+
+rm /etc/nginx/sites-enabled/default
+
+service nginx restart
+```
+
+### Membuat script untuk Webserver berisi:
+- Mengentikan apache2
+- Menginstall Nginx
+- Memasukkan config ke nginx/sites-available
+- Melakukan simlink dengan file konfigurasi dan menghapus default
+![image](https://github.com/user-attachments/assets/fc69083c-fb79-47de-820b-0ae7ed3ed7c4)
 
 
 
