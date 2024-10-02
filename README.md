@@ -317,6 +317,94 @@ cakra IN A 10.76.1.5  ; IP Bedahulu' > /etc/bind/jarkom/sudarsana.it25.com
 ![Screenshot 2024-10-02 120925](https://github.com/user-attachments/assets/1da1a8a0-f0cb-43af-9352-697e737616ef)
 ![Screenshot 2024-10-02 120943](https://github.com/user-attachments/assets/ffaff231-cc5c-4d34-8824-03f00a38247b)
 
+## No. 9
+### Membuat script untuk mengubah isi file /etc/bind/jarkom/pasopati.it25.com di Sriwijaya untuk menambah subdomain panah
+```
+#!/bin/bash
+
+# Tambahkan konfigurasi untuk delegasi panah.pasopati.it25.com ke Majapahit
+echo '
+;
+; BIND data file for local loopback interface
+Sriwijaya
+;
+$TTL    604800
+@       IN      SOA     pasopati.it25.com. pasopati.it25.com. (
+                        2024050301      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      pasopati.it25.com.
+@       IN      A       10.76.1.6     ; IP Kotalingga
+www     IN      CNAME   pasopati.it25.com.
+ns1     IN      A       10.76.2.2     ; Delegasikan ke Majapahit
+panah   IN      NS      ns1' > /etc/bind/jarkom/pasopati.it25.com
+
+echo '
+options {
+        directory "/var/cache/bind";
+
+        //dnssec-validation auto;
+        allow-query{any;};
+
+        auth-nxdomain no;    # conform to RFC1035
+        listen-on-v6 { any; };
+};' > /etc/bind/named.conf.options
+
+service bind9 restart
+```
+
+### Script untuk membuat file baru untuk konfigurasi subdomain panah di pasopati.it25.com 
+```
+#!/bin/bash
+
+# Tambahkan konfigurasi untuk delegasi panah.pasopati.it25.com ke Majapahit
+echo '
+options {
+        directory "/var/cache/bind";
+
+        //dnssec-validation auto;
+        allow-query{any;};
+
+        auth-nxdomain no;    # conform to RFC1035
+        listen-on-v6 { any; };
+};' > /etc/bind/named.conf.options
+
+echo 'zone "panah.pasopati.it25.com" {
+	type master;
+	file "/etc/bind/panah/panah.pasopati.it25.com";
+};' >> /etc/bind/named.conf.local
+
+mkdir /etc/bind/panah
+
+cp /etc/bind/db.local /etc/bind/panah/panah.pasopati.it25.com
+
+echo '
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     panah.pasopati.it25.com. panah.pasopati.it25.com. (
+                        2024050301      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      panah.pasopati.it25.com.
+@       IN      A       10.76.1.6     ; IP Kotalingga
+www     IN      CNAME   panah.pasopati.it25.com.' > /etc/bind/panah/panah.pasopati.it25.com
+
+service bind9 restart
+```
+
+### Lakukan pengetesan pada client dengan ping panah.pasopati.1t25.com
+![Screenshot 2024-10-02 153914](https://github.com/user-attachments/assets/ac76113d-c4f1-4684-932b-071312acec01)
+![Screenshot 2024-10-02 154033](https://github.com/user-attachments/assets/b8ea72a0-6087-4d4c-bb9d-187d0c99ff79)
+
+
 
 
 
