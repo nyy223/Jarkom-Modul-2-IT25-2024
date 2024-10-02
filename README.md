@@ -144,12 +144,13 @@ service bind9 restart
 ```
 Jalankan script
 ![image](https://github.com/user-attachments/assets/8544bcce-dee1-4422-b149-47a791f7505c)
+
 Tes di client
 ![image](https://github.com/user-attachments/assets/f3ca19fe-1ec2-40a0-8466-0f911b437693)
 
 ## No. 3
 ### Membuat domain yang mengarah ke Kotalingga
-- Membuat script konfigurasi seperti berikut:
+Membuat script konfigurasi seperti berikut:
 ```
 #!/bin/bash
 apt update
@@ -184,12 +185,13 @@ service bind9 restart
 ```
 Jalankan Script
 ![image](https://github.com/user-attachments/assets/2719aecd-2a6f-4604-8f09-fda9e466a5ba)
+
 Tes di client
 ![image](https://github.com/user-attachments/assets/d91a388c-6b2f-43db-917d-1b4d03b1463b)
 
 ## No. 4
 ### Membuat domain yang mengarah ke Tanjungkulai
-- Membuat konfigurasi seperti berikut:
+Membuat konfigurasi seperti berikut:
 ```
 #!/bin/bash
 apt update
@@ -224,6 +226,7 @@ service bind9 restart
 ```
 Jalankan script
 ![image](https://github.com/user-attachments/assets/d217b26d-ad8a-4d8e-9c3e-f3ef5683d208)
+
 Tes di client
 ![image](https://github.com/user-attachments/assets/fafea9b7-14c9-4aca-8e8a-d5873870f2eb)
 
