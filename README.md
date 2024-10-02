@@ -591,6 +591,7 @@ service nginx restart
 ## No.15
 ## No.16
 ### Membuat script untuk membuat konfigurasi baru solok.it25.com dengan isi mirip seperti No.2 karena sama-sama memberi domain ke Solok
+>Sriwijaya / Jarkom16.sh
 ```
 # Zona untuk domain solok.it25.com
 echo -e 'zone "solok.it25.com" {
