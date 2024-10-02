@@ -108,6 +108,7 @@ Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya me
 
 ## No. 2
 ### Membuat domain yang mengarah ke solok dengan membuat script untuk konfigurasi seperti berikut:
+>Jarkom2.sh
 ```
 #!/bin/bash
 apt update
@@ -148,6 +149,7 @@ service bind9 restart
 
 ## No. 3
 ### Membuat domain yang mengarah ke Kotalingga dengan membuat script konfigurasi seperti berikut:
+>Kotalingga/Jarkom2.sh
 ```
 #!/bin/bash
 apt update
@@ -188,6 +190,7 @@ service bind9 restart
 
 ## No. 4
 ### Membuat domain yang mengarah ke Tanjungkulai dengan membuat konfigurasi seperti berikut:
+>Tanjungkulai/Jarkom4.sh
 ```
 #!/bin/bash
 apt update
@@ -231,6 +234,7 @@ service bind9 restart
 
 ## No. 6
 ### Buat script untuk membuat reverse DNS mengakses domain pasopati.it25.com melalui alamat IP 10.76.1.6
+>Sriwijaya/Jarkom6.sh
 ```
 #!/bin/bash
 
@@ -260,6 +264,7 @@ service bind9 restart
 ```
 
 ### Buat script untuk ditaruh di semua client
+>Hayamwuruk, ThomasAlfaEdison, GajahMada / Jarkom6.sh
 ```
 #!/bin/bash
 
@@ -291,6 +296,7 @@ host -t PTR 10.76.1.6
 ## No. 8
 ### Membuat script untuk menambah line untuk menyetting subdomain "cakra" di /etc/bind/jarkom/sudarsana.it25.com
 ![image](https://github.com/user-attachments/assets/a744dcbe-f021-4b0e-a5d1-20c593ec26b3)
+>Sriwijaya/Jarkom8.sh
 ```
 #!/bin/bash
 
@@ -319,6 +325,7 @@ cakra IN A 10.76.1.5  ; IP Bedahulu' > /etc/bind/jarkom/sudarsana.it25.com
 
 ## No. 9
 ### Membuat script untuk mengubah isi file /etc/bind/jarkom/pasopati.it25.com di Sriwijaya untuk menambah subdomain panah
+>Sriwijaya/Jarkom9.sh
 ```
 #!/bin/bash
 
@@ -357,6 +364,7 @@ service bind9 restart
 ```
 
 ### Script untuk membuat file baru untuk konfigurasi subdomain panah di pasopati.it25.com 
+>Majapahit/Jarkom9.sh
 ```
 #!/bin/bash
 
@@ -407,6 +415,7 @@ service bind9 restart
 
 ## No. 10
 ### Membuat script untuk memodifikasi file yang telah dibuat di nomor 9, yaitu /etc/bind/panah/panah.pasopati.it25.com di Majapahit. Script bertujuan untuk menambah domain log dan www.log
+Majapahit/Jarkom10.sh
 ```
 #!/bin/bash
 
@@ -438,7 +447,7 @@ service bind9 restart
 
 ## No.11
 ### Membuat script agar semuanya dapat mengakses jaringan luar melalui DNS Sriwijaya
-
+>Sriwijaya/Jarkom11.sh
 ```
 #!/bin/bash
 
@@ -461,6 +470,7 @@ service bind9 restart
 ```
 
 ### Membuat script agar semuanya dapat mengakses jaringan luar melalui DNS Majapahit
+>Majapahit/Jarkom11.sh
 ```
 #!/bin/bash
 
@@ -501,8 +511,8 @@ soal 13
 - Mengentikan apache2
 - Menginstall Nginx
 - Memasukkan config ke nginx/sites-available
-- Melakukan simlink dengan file konfigurasi dan menghapus default
->Jarkom14.sh
+- Melakukan simlink dengan file konfigurasi dan menghapus file konfigurasi default
+>Solok/Jarkom14.sh
 ```
 service apache2 stop
 apt-get update
@@ -532,11 +542,90 @@ service nginx restart
 ```
 
 ### Membuat script untuk Webserver berisi:
-- Mengentikan apache2
-- Menginstall Nginx
-- Memasukkan config ke nginx/sites-available
-- Melakukan simlink dengan file konfigurasi dan menghapus default
+- Menginstall Nginx dan PHP
+- Memasukkan konfigurasi yang sudah di download ke konfigurasi php (var/wwww/jarkom/index.php)
+- Melakukan simlink untuk file konfigurasinya dan menghapus file konfigurasi default
+
+>Tanjungkulai, Bedahulu, Kotalingga/Jarkom14.sh
+```
+service apache2 stop
+apt-get update
+apt-get install nginx -y
+apt install php php-fpm php-mysql -y
+
+mkdir /var/www/jarkom
+cp /root/worker/index.php /var/www/jarkom/index.php
+
+service php7.0-fpm start
+
+echo -e "server {
+    listen 80;
+
+    root /var/www/jarkom;
+    index index.php index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files \$uri \$uri/ /index.php?\$query_string;
+    }
+
+    location ~ \.php\$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}" > /etc/nginx/sites-available/jarkom
+
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+
+rm /etc/nginx/sites-enabled/default
+
+service nginx restart
+```
 ![image](https://github.com/user-attachments/assets/fc69083c-fb79-47de-820b-0ae7ed3ed7c4)
+
+## No.15
+## No.16
+### Membuat script untuk membuat konfigurasi baru solok.it25.com dengan isi mirip seperti No.2 karena sama-sama memberi domain ke Solok
+```
+# Zona untuk domain solok.it25.com
+echo -e 'zone "solok.it25.com" {
+    type master;
+    file "/etc/bind/jarkom/solok.it25.com";
+};' >> /etc/bind/named.conf.local
+
+# File zona untuk solok.it25.com
+echo -e '
+$TTL 604800
+@       IN      SOA     solok.it25.com. root.solok.it25.com. (
+                            2         ; Serial
+                       604800         ; Refresh
+                        86400         ; Retry
+                      2419200         ; Expire
+                       604800 )       ; Negative Cache TTL
+
+@       IN      NS      solok.it25.com.
+@       IN      A       10.76.2.3
+www     IN      CNAME   solok.it25.com.
+' > /etc/bind/jarkom/solok.it25.com
+
+# Restart layanan BIND9
+service bind9 restart
+```
+### Tes ping di semua client menggunakan domain www.solok.it25.com
+![image](https://github.com/user-attachments/assets/6673e109-d660-43cc-b90f-2d6cfbc42e40)
+![image](https://github.com/user-attachments/assets/99c71418-e981-483a-838e-08e5aea1ef85)
+![image](https://github.com/user-attachments/assets/bb55d4f1-4ba5-40a9-87ff-0be454c8f910)
+
+### Tes lynx menggunakan domain www.solok.it25.com
+![image](https://github.com/user-attachments/assets/0a3406ab-45f0-415b-bb36-1e47f1be8af1)
+![image](https://github.com/user-attachments/assets/c2e7de0d-e9cc-47a7-b1ee-c289e2c10b58)
+
+
 
 
 
