@@ -405,6 +405,88 @@ service bind9 restart
 ![Screenshot 2024-10-02 154033](https://github.com/user-attachments/assets/b8ea72a0-6087-4d4c-bb9d-187d0c99ff79)
 ![image](https://github.com/user-attachments/assets/13df629e-7c15-43d1-95be-3828b8b95828)
 
+## No. 10
+### Membuat script untuk memodifikasi file yang telah dibuat di nomor 9, yaitu /etc/bind/panah/panah.pasopati.it25.com di Majapahit. Script bertujuan untuk menambah domain log dan www.log
+```
+#!/bin/bash
+
+# Tambahkan konfigurasi untuk membuat subdomain log.panah.pasopati.it25.com
+echo '
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     panah.pasopati.it25.com. panah.pasopati.it25.com. (
+                        2024050301      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      panah.pasopati.it25.com.
+@       IN      A       10.76.1.6     ; IP Kotalingga
+www     IN      CNAME   panah.pasopati.it25.com.
+log     IN      A       10.76.1.6     ; IP Kotalingga
+www.log IN      CNAME   panah.pasopati.it25.com.' > /etc/bind/panah/panah.pasopati.it25.com
+
+service bind9 restart
+```
+
+### Lakukan pengetesan ping log.panah.pasopati.it25.com dan www.log.panah.pasopati.it25.com di client
+![Screenshot 2024-10-02 161018](https://github.com/user-attachments/assets/638bd445-e3a8-4617-9a24-338d0050e30a)
+![Screenshot 2024-10-02 161554](https://github.com/user-attachments/assets/af6d3730-9b46-4a8b-b1c9-c5485b9b2792)
+
+## No.11
+### Membuat script agar semuanya dapat mengakses jaringan luar melalui DNS Sriwijaya
+
+```
+#!/bin/bash
+
+# Tambahkan konfigurasi untuk DNS forwarder
+echo '
+options {
+        directory "/var/cache/bind";
+
+        forwarders {
+                192.168.122.1; //IP Nusantara
+        };
+        //dnssec-validation auto;
+        allow-query{any;};
+
+        auth-nxdomain no;    # conform to RFC1035
+        listen-on-v6 { any; };
+};' > /etc/bind/named.conf.options
+
+service bind9 restart
+```
+
+### Membuat script agar semuanya dapat mengakses jaringan luar melalui DNS Majapahit
+```
+#!/bin/bash
+
+# Tambahkan konfigurasi untuk DNS forwarder
+echo '
+options {
+        directory "/var/cache/bind";
+
+        forwarders {
+                192.168.122.1; //IP Nusantara
+        };
+        //dnssec-validation auto;
+        allow-query{any;};
+
+        auth-nxdomain no;    # conform to RFC1035
+        listen-on-v6 { any; };
+};' > /etc/bind/named.conf.options
+
+service bind9 restart
+```
+
+### Lakukan testing di semua client
+![image](https://github.com/user-attachments/assets/0e2e2cb7-0cca-46ff-8298-b812518cc2ab)
+![image](https://github.com/user-attachments/assets/464361ce-4995-46d7-bd03-bf4e92d43994)
+![image](https://github.com/user-attachments/assets/4e3d977b-c0f9-481e-9da1-065babcabc7f)
+
 
 
 
