@@ -285,6 +285,39 @@ host -t PTR 10.76.1.6
 ### Hasil di client
 ![Screenshot 2024-10-01 225451](https://github.com/user-attachments/assets/6468eb8b-ae55-4924-9698-7091e098c054)
 
+## No. 7
+### Ayo kerjain nay
+
+## No. 8
+### Membuat script untuk menambah line untuk menyetting subdomain "cakra" di /etc/bind/jarkom/sudarsana.it25.com
+![image](https://github.com/user-attachments/assets/a744dcbe-f021-4b0e-a5d1-20c593ec26b3)
+```
+#!/bin/bash
+
+# Tambahkan konfigurasi untuk membuat subdomain cakra.sudarsana.it25.com
+echo '
+
+; BIND data file for local loopback interface
+$TTL 604800
+@   IN  SOA sudarsana.it25.com. sudarsana.it25.com. (
+            2024100104 ; Serial
+            604800     ; Refresh
+            86400      ; Retry
+            2419200    ; Expire
+            604800 )   ; Negative Cache TTL
+;
+@   IN  NS sudarsana.it25.com.
+@   IN  A 10.76.2.3   ; IP Solok
+www IN  CNAME sudarsana.it25.com.
+cakra IN A 10.76.1.5  ; IP Bedahulu' > /etc/bind/jarkom/sudarsana.it25.com
+```
+
+### Lakukan pengetesan subdomain di semua client
+![Screenshot 2024-10-02 120532](https://github.com/user-attachments/assets/464f76e3-e053-41d8-9553-72f779ed0639)
+![Screenshot 2024-10-02 120925](https://github.com/user-attachments/assets/1da1a8a0-f0cb-43af-9352-697e737616ef)
+![Screenshot 2024-10-02 120943](https://github.com/user-attachments/assets/ffaff231-cc5c-4d34-8824-03f00a38247b)
+
+
 
 
 
