@@ -95,21 +95,19 @@ iface eth0 inet static
 ```
 
 ## No. 1
-Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya membuat dua kotanya menjadi web server yaitu Tanjungkulai, dan Bedahulu, serta Sriwijaya sendiri akan menjadi DNS Master. Kemudian karena merasa terdesak, Majapahit memberikan bantuan dan menjadikan kerajaannya (Majapahit) menjadi DNS Slave. 
-### Membuat Tanjungkulai dan Bedahulu menjadi webserver
-#### Tanjungkulai dan Bedahulu
-Install apache2 melalui .bashrc
+Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya membuat dua kotanya menjadi web server yaitu Tanjungkulai, dan Bedahulu, serta Sriwijaya sendiri akan menjadi DNS Master. Kemudian karena merasa terdesak, Majapahit memberikan bantuan dan menjadikan kerajaannya (Majapahit) menjadi DNS Slave.
+
+### Membuat Tanjungkulai dan Bedahulu menjadi webserver dengan install apache2 melalui .bashrc di Tanjungkulai dan Bedahulu
 ![Tanjungkulai](https://github.com/user-attachments/assets/7b086ac2-035c-442f-8167-a2aaf11aea5c)
-Coba curl melalui node lain untuk mengecek apakah apache berjalan
+
+### Coba curl melalui node lain untuk mengecek apakah apache berjalan
 ![Tanjungkulai(2)](https://github.com/user-attachments/assets/2c88144f-d2d0-4d89-8b87-443cfef7d07c)
 
-### Membuat Sriwijaya dan Majapahit menjadi DNS Master dan Slave
-Install Bind9 melalui .bashrc
+### Install Bind9 melalui .bashrc di Sriwijaya dan Majapahit untuk menjadi DNS Master dan Slave
 ![image](https://github.com/user-attachments/assets/34ef6ca7-3b38-47f1-b70c-4cc4d9267a91)
 
 ## No. 2
-### Membuat domain yang mengarah ke solok
-Membuat script untuk konfigurasi seperti berikut:
+### Membuat domain yang mengarah ke solok dengan membuat script untuk konfigurasi seperti berikut:
 ```
 #!/bin/bash
 apt update
@@ -142,15 +140,14 @@ www     IN      CNAME   sudarsana.it25.com.' > /etc/bind/jarkom/sudarsana.it25.c
 
 service bind9 restart
 ```
-Jalankan script
+### Jalankan script
 ![image](https://github.com/user-attachments/assets/8544bcce-dee1-4422-b149-47a791f7505c)
 
-Tes di client
+### Tes di client
 ![image](https://github.com/user-attachments/assets/f3ca19fe-1ec2-40a0-8466-0f911b437693)
 
 ## No. 3
-### Membuat domain yang mengarah ke Kotalingga
-Membuat script konfigurasi seperti berikut:
+### Membuat domain yang mengarah ke Kotalingga dengan membuat script konfigurasi seperti berikut:
 ```
 #!/bin/bash
 apt update
@@ -183,15 +180,14 @@ www     IN      CNAME   pasopati.it25.com.' > /etc/bind/jarkom/pasopati.it25.com
 
 service bind9 restart
 ```
-Jalankan Script
+### Jalankan Script
 ![image](https://github.com/user-attachments/assets/2719aecd-2a6f-4604-8f09-fda9e466a5ba)
 
-Tes di client
+### Tes di client
 ![image](https://github.com/user-attachments/assets/d91a388c-6b2f-43db-917d-1b4d03b1463b)
 
 ## No. 4
-### Membuat domain yang mengarah ke Tanjungkulai
-Membuat konfigurasi seperti berikut:
+### Membuat domain yang mengarah ke Tanjungkulai dengan membuat konfigurasi seperti berikut:
 ```
 #!/bin/bash
 apt update
@@ -224,10 +220,10 @@ www     IN      CNAME   rujapala.it25.com.' > /etc/bind/jarkom/rujapala.it25.com
 
 service bind9 restart
 ```
-Jalankan script
+### Jalankan script
 ![image](https://github.com/user-attachments/assets/d217b26d-ad8a-4d8e-9c3e-f3ef5683d208)
 
-Tes di client
+### Tes di client
 ![image](https://github.com/user-attachments/assets/fafea9b7-14c9-4aca-8e8a-d5873870f2eb)
 
 ## No. 5
@@ -279,6 +275,7 @@ echo '
 nameserver 10.76.1.2
 nameserver 10.76.2.2' > /etc/resolv.conf
 ```
+
 
 ### Test di client
 ```
