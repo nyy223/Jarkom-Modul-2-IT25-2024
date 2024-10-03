@@ -926,6 +926,24 @@ service nginx restart
 ![image](https://github.com/user-attachments/assets/fc69083c-fb79-47de-820b-0ae7ed3ed7c4)
 
 ## No.15
+### Install apache2-utils untuk melakukan pengujian Apache Benchmark
+```
+apt install apache2-utils
+```
+### Lakukan pengetesan load balancer Solok di semua client
+```
+ab -n 1000 -c 100 http://10.76.2.3/
+```
+### Hasil pengetesan
+![image](https://github.com/user-attachments/assets/ab8c0ca1-6a90-416c-8c42-5b92995f0a70)
+![image](https://github.com/user-attachments/assets/31bfaeec-9019-46ab-9187-c479111e658a)
+
+![image](https://github.com/user-attachments/assets/59034a94-91be-4480-8a1a-085ffe987514)
+![image](https://github.com/user-attachments/assets/3f58f480-3c79-4e2d-bfb6-fe637243ef13)
+
+![image](https://github.com/user-attachments/assets/41390bcc-0adc-49e0-98c6-3b5fe15d6b3f)
+![image](https://github.com/user-attachments/assets/d8936402-9c39-40f9-9af8-7cd69bb62428)
+
 ## No.16
 Karena dirasa kurang aman dari brainrot karena masih memakai IP, markas ingin akses ke Solok memakai solok.xxxx.com dengan alias www.solok.xxxx.com (sesuai web server terbaik hasil analisis kalian).
 
