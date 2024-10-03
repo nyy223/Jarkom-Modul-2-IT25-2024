@@ -7,11 +7,11 @@
 | Nayla Raissa Azzahra  | 5027231054 |
 
 ## Pembuatan Topologi
-![Screenshot 2024-10-01 112926](https://github.com/user-attachments/assets/5a11cd09-9ea6-4940-947d-8b80714efaf3)
+<img width="907" alt="image" src="https://github.com/user-attachments/assets/17cc96f2-a066-4803-8184-61f0a1f6168b">
 
 ## Konfigurasi
+#### Nusantara
 ```
---Nusantara--
 auto eth0
 iface eth0 inet dhcp
 
@@ -29,64 +29,73 @@ auto eth3
 iface eth3 inet static
 	address 10.76.3.1
 	netmask 255.255.255.0
-
---SRIWIJAYA--
+```
+#### Sriwijaya
+```
 auto eth0
 iface eth0 inet static
 	address 10.76.1.2
 	netmask 255.255.255.0
 	gateway 10.76.1.1
-
---HAYAMWURUK--
+```
+#### HayamWuruk
+```
 auto eth0
 iface eth0 inet static
 	address 10.76.1.3
 	netmask 255.255.255.0
 	gateway 10.76.1.1
-
---MAJAPAHIT--
+```
+#### Majapahit
+```
 auto eth0
 iface eth0 inet static
 	address 10.76.2.2
 	netmask 255.255.255.0
 	gateway 10.76.2.1
-
---SOLOK--
+```
+#### Solok
+```
 auto eth0
 iface eth0 inet static
 	address 10.76.2.3
 	netmask 255.255.255.0
 	gateway 10.76.2.1
-
---GajahMada--
+```
+#### GajahMada
+```
 auto eth0
 iface eth0 inet static
 	address 10.76.3.2
 	netmask 255.255.255.0
 	gateway 10.76.3.1
-
---ThomasAlfaEdison--
+```
+#### ThomasAlfaEdison
+```
 auto eth0
 iface eth0 inet static
 	address 10.76.3.3
 	netmask 255.255.255.0
 	gateway 10.76.3.1
-
---Tanjungkulai--
+```
+#### Tanjungkulai
+```
 auto eth0
 iface eth0 inet static
 	address 10.76.1.4
 	netmask 255.255.255.0
 	gateway 10.76.1.1
-
---Bedahulu--
+```
+#### Bedahulu
+```
 auto eth0
 iface eth0 inet static
 	address 10.76.1.5
 	netmask 255.255.255.0
 	gateway 10.76.1.1
-
---Kotalingga--
+```
+#### Kotalingga
+```
 auto eth0
 iface eth0 inet static
 	address 10.76.1.6
@@ -97,18 +106,53 @@ iface eth0 inet static
 ## No. 1
 Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya membuat dua kotanya menjadi web server yaitu Tanjungkulai, dan Bedahulu, serta Sriwijaya sendiri akan menjadi DNS Master. Kemudian karena merasa terdesak, Majapahit memberikan bantuan dan menjadikan kerajaannya (Majapahit) menjadi DNS Slave.
 
-### Membuat Tanjungkulai dan Bedahulu menjadi webserver dengan install apache2 melalui .bashrc di Tanjungkulai dan Bedahulu
+### Membuat Tanjungkulai dan Bedahulu menjadi webserver
+Install apache2 melalui .bashrc di Tanjungkulai dan Bedahulu
 ![Tanjungkulai](https://github.com/user-attachments/assets/7b086ac2-035c-442f-8167-a2aaf11aea5c)
 
-### Coba curl melalui node lain untuk mengecek apakah apache berjalan
+Coba curl melalui node lain untuk mengecek apakah apache berjalan
 ![Tanjungkulai(2)](https://github.com/user-attachments/assets/2c88144f-d2d0-4d89-8b87-443cfef7d07c)
 
-### Install Bind9 melalui .bashrc di Sriwijaya dan Majapahit untuk menjadi DNS Master dan Slave
-![image](https://github.com/user-attachments/assets/34ef6ca7-3b38-47f1-b70c-4cc4d9267a91)
+### Setup .bashrc untuk mengubah Sriwijaya menjadi DNS Master dan Majapahit menjadi DNS Slave
+#### Nusantara
+```
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.76.0.0/16
+```
+#### Sriwijaya
+```
+echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+apt-get update
+apt-get install bind9 -y
+```
+#### Majapahit
+```
+echo 'nameserver 192.168.122.1
+nameserver 10.76.1.2' > /etc/resolv.conf // IP Master
+apt-get update
+apt-get install bind9 -y
+```
+#### HayamWuruk, GajahMada, ThomasAlfaEdison (Client)
+```
+echo -e '
+nameserver 10.76.1.2 #IP Master
+nameserver 10.76.2.2 #IP Slave
+nameserver 192.168.122.1
+' > /etc/resolv.conf
+```
+#### TanjungKulai, Bedahulu, Kotalingga, Solok
+```
+echo 'nameserver 192.168.122.1' > /etc/resolv.conf
+```
+### Testing
+Melakukan testing pada client dengan `ping google.com`
+![WhatsApp Image 2024-10-02 at 19 11 45](https://github.com/user-attachments/assets/766b23aa-86e0-41dc-bbc7-7955c7ad320c)
+![WhatsApp Image 2024-10-02 at 19 11 46](https://github.com/user-attachments/assets/a70b57ff-0985-4f14-acf4-1ec3702ad6e9)
+![WhatsApp Image 2024-10-02 at 19 11 46 (1)](https://github.com/user-attachments/assets/7038add5-cd58-4195-b26e-760b0dd378fc)
 
 ## No. 2
-### Membuat domain yang mengarah ke solok dengan membuat script untuk konfigurasi seperti berikut:
->Jarkom2.sh
+Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka buatlah sebuah domain yang mengarah ke Solok dengan alamat sudarsana.xxxx.com dengan alias www.sudarsana.xxxx.com, dimana xxxx merupakan kode kelompok. Contoh: sudarsana.it01.com.
+
+#### Membuat domain yang mengarah ke solok dengan membuat script di Sriwijaya dengan konfigurasi seperti berikut:
 ```
 #!/bin/bash
 apt update
@@ -141,15 +185,16 @@ www     IN      CNAME   sudarsana.it25.com.' > /etc/bind/jarkom/sudarsana.it25.c
 
 service bind9 restart
 ```
-### Jalankan script
+#### Jalankan script
 ![image](https://github.com/user-attachments/assets/8544bcce-dee1-4422-b149-47a791f7505c)
 
-### Tes di client
+#### Tes di client
 ![image](https://github.com/user-attachments/assets/f3ca19fe-1ec2-40a0-8466-0f911b437693)
 
 ## No. 3
-### Membuat domain yang mengarah ke Kotalingga dengan membuat script konfigurasi seperti berikut:
->Kotalingga/Jarkom2.sh
+Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibutuhkan domain lain yaitu pasopati.xxxx.com dengan alias www.pasopati.xxxx.com yang mengarah ke Kotalingga.
+
+#### Membuat domain yang mengarah ke Kotalingga dengan membuat script di Sriwijaya dengan konfigurasi seperti berikut:
 ```
 #!/bin/bash
 apt update
@@ -182,15 +227,16 @@ www     IN      CNAME   pasopati.it25.com.' > /etc/bind/jarkom/pasopati.it25.com
 
 service bind9 restart
 ```
-### Jalankan Script
+#### Jalankan Script
 ![image](https://github.com/user-attachments/assets/2719aecd-2a6f-4604-8f09-fda9e466a5ba)
 
-### Tes di client
+#### Tes di client
 ![image](https://github.com/user-attachments/assets/d91a388c-6b2f-43db-917d-1b4d03b1463b)
 
 ## No. 4
-### Membuat domain yang mengarah ke Tanjungkulai dengan membuat konfigurasi seperti berikut:
->Tanjungkulai/Jarkom4.sh
+Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataan dan suplai yang tersebar. Informasi dan suplai meme terbaru tersebut mengarah ke Tanjungkulai dan domain yang ingin digunakan adalah rujapala.xxxx.com dengan alias www.rujapala.xxxx.com.
+
+#### Membuat domain yang mengarah ke Tanjungkulai dengan membuat script di Sriwijaya dengan konfigurasi seperti berikut:
 ```
 #!/bin/bash
 apt update
@@ -223,18 +269,24 @@ www     IN      CNAME   rujapala.it25.com.' > /etc/bind/jarkom/rujapala.it25.com
 
 service bind9 restart
 ```
-### Jalankan script
+#### Jalankan script
 ![image](https://github.com/user-attachments/assets/d217b26d-ad8a-4d8e-9c3e-f3ef5683d208)
 
-### Tes di client
+#### Tes di client
 ![image](https://github.com/user-attachments/assets/fafea9b7-14c9-4aca-8e8a-d5873870f2eb)
 
 ## No. 5
-### Semua client sudah di tes di nomor 2,3, dan 4 dan berhasil melakukan ping
+Pastikan domain-domain tersebut dapat diakses oleh seluruh komputer (client) yang berada di Nusantara.
+
+#### Melakukan testing dari client untuk semua domain
+![WhatsApp Image 2024-10-03 at 04 00 24](https://github.com/user-attachments/assets/9a3be09d-da36-4592-87b9-111a3ad25fe6)
+![WhatsApp Image 2024-10-03 at 04 00 25](https://github.com/user-attachments/assets/591b51c4-2534-4c19-9cfc-50349290733e)
+![WhatsApp Image 2024-10-03 at 04 00 25 (1)](https://github.com/user-attachments/assets/544a5e5d-6086-47cb-9105-3387005d463b)
 
 ## No. 6
-### Buat script untuk membuat reverse DNS mengakses domain pasopati.it25.com melalui alamat IP 10.76.1.6
->Sriwijaya/Jarkom6.sh
+Beberapa daerah memiliki keterbatasan yang menyebabkan hanya dapat mengakses domain secara langsung melalui alamat IP domain tersebut. Karena daerah tersebut tidak diketahui secara spesifik, pastikan semua komputer (client) dapat mengakses domain pasopati.xxxx.com melalui alamat IP Kotalingga (Notes: menggunakan pointer record).
+
+#### Buat script di Sriwijaya untuk membuat reverse DNS mengakses domain pasopati.it25.com melalui alamat IP 10.76.1.6
 ```
 #!/bin/bash
 
@@ -263,8 +315,7 @@ $TTL 604800
 service bind9 restart
 ```
 
-### Buat script untuk ditaruh di semua client
->Hayamwuruk, ThomasAlfaEdison, GajahMada / Jarkom6.sh
+#### Buat script untuk ditaruh di semua client
 ```
 #!/bin/bash
 
@@ -281,17 +332,16 @@ nameserver 10.76.1.2
 nameserver 10.76.2.2' > /etc/resolv.conf
 ```
 
-
-### Test di client
+#### Test di client
 ```
 host -t PTR 10.76.1.6
 ```
-
-### Hasil di client
 ![Screenshot 2024-10-01 225451](https://github.com/user-attachments/assets/6468eb8b-ae55-4924-9698-7091e098c054)
 
 ## No. 7
-Sriwijaya
+Akhir-akhir ini seringkali terjadi serangan brainrot ke DNS Server Utama, sebagai tindakan antisipasi kamu diperintahkan untuk membuat DNS Slave di Majapahit untuk semua domain yang sudah dibuat sebelumnya yang mengarah ke Sriwijaya.
+
+#### Membuat script di Sriwijaya sebagai DNS Master dengan also-notify dan allow-transfer agar memberikan izin kepada IP Slave
 ```
 #!/bin/bash
 
@@ -322,7 +372,7 @@ zone "rujapala.it25.com" {
 
 service bind9 restart
 ```
-Majapahit
+#### Membuat script di Majapahit sebagai DNS Slave
 ```
 #!/bin/bash
 
@@ -358,10 +408,18 @@ zone "rujapala.it25.com" {
 
 service bind9 restart
 ```
+#### Mematikan bind9 pada Sriwijaya (master) untuk memastikan bahwa Majapahit (slave) dapat bekerja
+`service bind9 stop`
+![WhatsApp Image 2024-10-03 at 09 39 54](https://github.com/user-attachments/assets/f387fc10-fe02-4477-8158-2bb33b4c8261)
+
+#### Melakukan testing dari client
+![WhatsApp Image 2024-10-03 at 09 39 54 (1)](https://github.com/user-attachments/assets/44bbd360-868f-42ac-a6d2-cd655bc3ff78)
+
 ## No. 8
-### Membuat script untuk menambah line untuk menyetting subdomain "cakra" di /etc/bind/jarkom/sudarsana.it25.com
+Kamu juga diperintahkan untuk membuat subdomain khusus melacak kekuatan tersembunyi di Ohio dengan subdomain cakra.sudarsana.xxxx.com yang mengarah ke Bedahulu.
+
+#### Membuat script di Sriwijaya untuk menambah line untuk menyetting subdomain "cakra" di /etc/bind/jarkom/sudarsana.it25.com
 ![image](https://github.com/user-attachments/assets/a744dcbe-f021-4b0e-a5d1-20c593ec26b3)
->Sriwijaya/Jarkom8.sh
 ```
 #!/bin/bash
 
@@ -383,14 +441,15 @@ www IN  CNAME sudarsana.it25.com.
 cakra IN A 10.76.1.5  ; IP Bedahulu' > /etc/bind/jarkom/sudarsana.it25.com
 ```
 
-### Lakukan pengetesan subdomain di semua client
+#### Lakukan pengetesan subdomain di semua client
 ![Screenshot 2024-10-02 120532](https://github.com/user-attachments/assets/464f76e3-e053-41d8-9553-72f779ed0639)
 ![Screenshot 2024-10-02 120925](https://github.com/user-attachments/assets/1da1a8a0-f0cb-43af-9352-697e737616ef)
 ![Screenshot 2024-10-02 120943](https://github.com/user-attachments/assets/ffaff231-cc5c-4d34-8824-03f00a38247b)
 
 ## No. 9
-### Membuat script untuk mengubah isi file /etc/bind/jarkom/pasopati.it25.com di Sriwijaya untuk menambah subdomain panah
->Sriwijaya/Jarkom9.sh
+Karena terjadi serangan DDOS oleh shikanoko nokonoko koshitantan (NUN), sehingga sistem komunikasinya terhalang. Untuk melindungi warga, kita diperlukan untuk membuat sistem peringatan dari siren man oleh Frekuensi Freak dan memasukkannya ke subdomain panah.pasopati.xxxx.com dalam folder panah dan pastikan dapat diakses secara mudah dengan menambahkan alias www.panah.pasopati.xxxx.com dan mendelegasikan subdomain tersebut ke Majapahit dengan alamat IP menuju radar di Kotalingga.
+
+#### Membuat script di Sriwijaya untuk mengubah isi file /etc/bind/jarkom/pasopati.it25.com di Sriwijaya untuk menambah subdomain panah
 ```
 #!/bin/bash
 
@@ -428,8 +487,7 @@ options {
 service bind9 restart
 ```
 
-### Script untuk membuat file baru untuk konfigurasi subdomain panah di pasopati.it25.com 
->Majapahit/Jarkom9.sh
+#### Membuat Script di Majapahit untuk membuat file baru untuk konfigurasi subdomain panah di pasopati.it25.com 
 ```
 #!/bin/bash
 
@@ -473,14 +531,15 @@ www     IN      CNAME   panah.pasopati.it25.com.' > /etc/bind/panah/panah.pasopa
 service bind9 restart
 ```
 
-### Lakukan pengetesan pada client dengan ping panah.pasopati.1t25.com
+#### Lakukan testing pada client dengan ping panah.pasopati.1t25.com
 ![Screenshot 2024-10-02 153914](https://github.com/user-attachments/assets/ac76113d-c4f1-4684-932b-071312acec01)
 ![Screenshot 2024-10-02 154033](https://github.com/user-attachments/assets/b8ea72a0-6087-4d4c-bb9d-187d0c99ff79)
 ![image](https://github.com/user-attachments/assets/13df629e-7c15-43d1-95be-3828b8b95828)
 
 ## No. 10
-### Membuat script untuk memodifikasi file yang telah dibuat di nomor 9, yaitu /etc/bind/panah/panah.pasopati.it25.com di Majapahit. Script bertujuan untuk menambah domain log dan www.log
-Majapahit/Jarkom10.sh
+Markas juga meminta catatan kapan saja meme brain rot akan dijatuhkan, maka buatlah subdomain baru di subdomain panah yaitu log.panah.pasopati.xxxx.com serta aliasnya www.log.panah.pasopati.xxxx.com yang juga mengarah ke Kotalingga.
+
+#### Membuat script di Majapahit untuk memodifikasi file yang telah dibuat di nomor 9, yaitu /etc/bind/panah/panah.pasopati.it25.com di Majapahit. Script bertujuan untuk menambah domain log dan www.log
 ```
 #!/bin/bash
 
@@ -506,13 +565,14 @@ www.log IN      CNAME   panah.pasopati.it25.com.' > /etc/bind/panah/panah.pasopa
 service bind9 restart
 ```
 
-### Lakukan pengetesan ping log.panah.pasopati.it25.com dan www.log.panah.pasopati.it25.com di client
+#### Lakukan testing ping log.panah.pasopati.it25.com dan www.log.panah.pasopati.it25.com di client
 ![Screenshot 2024-10-02 161018](https://github.com/user-attachments/assets/638bd445-e3a8-4617-9a24-338d0050e30a)
 ![Screenshot 2024-10-02 161554](https://github.com/user-attachments/assets/af6d3730-9b46-4a8b-b1c9-c5485b9b2792)
 
 ## No.11
-### Membuat script agar semuanya dapat mengakses jaringan luar melalui DNS Sriwijaya
->Sriwijaya/Jarkom11.sh
+Setelah pertempuran mereda, warga IT dapat kembali mengakses jaringan luar dan menikmati meme brainrot terbaru, tetapi hanya warga Majapahit saja yang dapat mengakses jaringan luar secara langsung. Buatlah konfigurasi agar warga IT yang berada diluar Majapahit dapat mengakses jaringan luar melalui DNS Server Majapahit.
+
+#### Membuat script di Sriwijaya agar semuanya dapat mengakses jaringan luar melalui DNS Sriwijaya
 ```
 #!/bin/bash
 
@@ -534,8 +594,7 @@ options {
 service bind9 restart
 ```
 
-### Membuat script agar semuanya dapat mengakses jaringan luar melalui DNS Majapahit
->Majapahit/Jarkom11.sh
+### Membuat script di Majapahit agar semuanya dapat mengakses jaringan luar melalui DNS Majapahit
 ```
 #!/bin/bash
 
@@ -557,7 +616,7 @@ options {
 service bind9 restart
 ```
 
-### Lakukan testing di semua client
+#### Lakukan testing di semua client
 ![image](https://github.com/user-attachments/assets/0e2e2cb7-0cca-46ff-8298-b812518cc2ab)
 ![image](https://github.com/user-attachments/assets/464361ce-4995-46d7-bd03-bf4e92d43994)
 ![image](https://github.com/user-attachments/assets/4e3d977b-c0f9-481e-9da1-065babcabc7f)
