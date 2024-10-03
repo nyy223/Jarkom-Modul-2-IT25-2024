@@ -817,7 +817,7 @@ echo '
 
 service apache2 restart
 ```
-#### Melakukan testing pada client
+#### Melakukan testing pada client untuk menguji apakah loadbalancer bekerja atau tidak
 `lynx http://10.76.2.3/index.php`
 ![Screenshot 2024-10-02 225728](https://github.com/user-attachments/assets/d79f5cd2-1a20-4ea7-801b-cd3fbc0a4d73)
 ![Screenshot 2024-10-02 225743](https://github.com/user-attachments/assets/4d569421-861e-4c52-a3f6-4e1e45766f77)
@@ -839,7 +839,7 @@ apt-get install nginx -y
 echo "upstream backend {
     server 10.76.1.4;
     server 10.76.1.5;
-    server 10.76.1.6
+    server 10.76.1.6;
 }
 
 server {
