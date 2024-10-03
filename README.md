@@ -153,6 +153,7 @@ Melakukan testing pada client dengan `ping google.com`
 Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka buatlah sebuah domain yang mengarah ke Solok dengan alamat sudarsana.xxxx.com dengan alias www.sudarsana.xxxx.com, dimana xxxx merupakan kode kelompok. Contoh: sudarsana.it01.com.
 
 #### Membuat domain yang mengarah ke solok dengan membuat script di Sriwijaya dengan konfigurasi seperti berikut:
+>Sriwijaya/Jarkom2.sh
 ```
 #!/bin/bash
 apt update
@@ -195,6 +196,7 @@ service bind9 restart
 Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibutuhkan domain lain yaitu pasopati.xxxx.com dengan alias www.pasopati.xxxx.com yang mengarah ke Kotalingga.
 
 #### Membuat domain yang mengarah ke Kotalingga dengan membuat script di Sriwijaya dengan konfigurasi seperti berikut:
+>Sriwijaya/Jarkom2.sh
 ```
 #!/bin/bash
 apt update
