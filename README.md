@@ -1064,3 +1064,7 @@ server {
 ![image](https://github.com/user-attachments/assets/92bf3da4-0a50-4336-86e9-847b0c066fdd)
 ![image](https://github.com/user-attachments/assets/4096cb9a-760d-47f4-a627-17d2b4c2e9d7)
 
+## No.19
+Karena probset sudah kehabisan ide masuk ke salah satu worker buatkan akses direktori listing yang mengarah ke resource worker2.
+
+### Membuat script untuk 
