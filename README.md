@@ -106,14 +106,14 @@ iface eth0 inet static
 ## No. 1
 Untuk mempersiapkan peperangan World War MMXXIV (Iya sebanyak itu), Sriwijaya membuat dua kotanya menjadi web server yaitu Tanjungkulai, dan Bedahulu, serta Sriwijaya sendiri akan menjadi DNS Master. Kemudian karena merasa terdesak, Majapahit memberikan bantuan dan menjadikan kerajaannya (Majapahit) menjadi DNS Slave.
 
-### Membuat Tanjungkulai dan Bedahulu menjadi webserver
+#### Membuat Tanjungkulai dan Bedahulu menjadi webserver
 Install apache2 melalui .bashrc di Tanjungkulai dan Bedahulu
 ![Tanjungkulai](https://github.com/user-attachments/assets/7b086ac2-035c-442f-8167-a2aaf11aea5c)
 
 Coba curl melalui node lain untuk mengecek apakah apache berjalan
 ![Tanjungkulai(2)](https://github.com/user-attachments/assets/2c88144f-d2d0-4d89-8b87-443cfef7d07c)
 
-### Setup .bashrc untuk mengubah Sriwijaya menjadi DNS Master dan Majapahit menjadi DNS Slave
+#### Setup .bashrc untuk mengubah Sriwijaya menjadi DNS Master dan Majapahit menjadi DNS Slave
 #### Nusantara
 ```
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.76.0.0/16
@@ -143,7 +143,7 @@ nameserver 192.168.122.1
 ```
 echo 'nameserver 192.168.122.1' > /etc/resolv.conf
 ```
-### Testing
+#### Testing
 Melakukan testing pada client dengan `ping google.com`
 ![WhatsApp Image 2024-10-02 at 19 11 45](https://github.com/user-attachments/assets/766b23aa-86e0-41dc-bbc7-7955c7ad320c)
 ![WhatsApp Image 2024-10-02 at 19 11 46](https://github.com/user-attachments/assets/a70b57ff-0985-4f14-acf4-1ec3702ad6e9)
