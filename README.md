@@ -153,6 +153,7 @@ Melakukan testing pada client dengan `ping google.com`
 Karena para pasukan membutuhkan koordinasi untuk melancarkan serangannya, maka buatlah sebuah domain yang mengarah ke Solok dengan alamat sudarsana.xxxx.com dengan alias www.sudarsana.xxxx.com, dimana xxxx merupakan kode kelompok. Contoh: sudarsana.it01.com.
 
 #### Membuat domain yang mengarah ke solok dengan membuat script di Sriwijaya dengan konfigurasi seperti berikut:
+>Sriwijaya/Jarkom2.sh
 ```
 #!/bin/bash
 apt update
@@ -195,6 +196,7 @@ service bind9 restart
 Para pasukan juga perlu mengetahui mana titik yang akan diserang, sehingga dibutuhkan domain lain yaitu pasopati.xxxx.com dengan alias www.pasopati.xxxx.com yang mengarah ke Kotalingga.
 
 #### Membuat domain yang mengarah ke Kotalingga dengan membuat script di Sriwijaya dengan konfigurasi seperti berikut:
+>Sriwijaya/Jarkom3.sh
 ```
 #!/bin/bash
 apt update
@@ -237,6 +239,7 @@ service bind9 restart
 Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataan dan suplai yang tersebar. Informasi dan suplai meme terbaru tersebut mengarah ke Tanjungkulai dan domain yang ingin digunakan adalah rujapala.xxxx.com dengan alias www.rujapala.xxxx.com.
 
 #### Membuat domain yang mengarah ke Tanjungkulai dengan membuat script di Sriwijaya dengan konfigurasi seperti berikut:
+>Sriwijaya/Jarkom4.sh
 ```
 #!/bin/bash
 apt update
@@ -287,6 +290,7 @@ Pastikan domain-domain tersebut dapat diakses oleh seluruh komputer (client) yan
 Beberapa daerah memiliki keterbatasan yang menyebabkan hanya dapat mengakses domain secara langsung melalui alamat IP domain tersebut. Karena daerah tersebut tidak diketahui secara spesifik, pastikan semua komputer (client) dapat mengakses domain pasopati.xxxx.com melalui alamat IP Kotalingga (Notes: menggunakan pointer record).
 
 #### Buat script di Sriwijaya untuk membuat reverse DNS mengakses domain pasopati.it25.com melalui alamat IP 10.76.1.6
+>Sriwijaya/Jarkom6.sh
 ```
 #!/bin/bash
 
@@ -316,6 +320,7 @@ service bind9 restart
 ```
 
 #### Buat script untuk ditaruh di semua client
+Hayamwuruk, Gajahmada, ThomasAlfaEdison/Jarkom6.sh
 ```
 #!/bin/bash
 
@@ -342,6 +347,7 @@ host -t PTR 10.76.1.6
 Akhir-akhir ini seringkali terjadi serangan brainrot ke DNS Server Utama, sebagai tindakan antisipasi kamu diperintahkan untuk membuat DNS Slave di Majapahit untuk semua domain yang sudah dibuat sebelumnya yang mengarah ke Sriwijaya.
 
 #### Membuat script di Sriwijaya sebagai DNS Master dengan also-notify dan allow-transfer agar memberikan izin kepada IP Slave
+>Sriwijaya/Jarkom7.sh
 ```
 #!/bin/bash
 
@@ -373,6 +379,7 @@ zone "rujapala.it25.com" {
 service bind9 restart
 ```
 #### Membuat script di Majapahit sebagai DNS Slave
+>Majapahit/Jarkom7.sh
 ```
 #!/bin/bash
 
@@ -420,6 +427,7 @@ Kamu juga diperintahkan untuk membuat subdomain khusus melacak kekuatan tersembu
 
 #### Membuat script di Sriwijaya untuk menambah line untuk menyetting subdomain "cakra" di /etc/bind/jarkom/sudarsana.it25.com
 ![image](https://github.com/user-attachments/assets/a744dcbe-f021-4b0e-a5d1-20c593ec26b3)
+>Sriwijaya/Jarkom8.sh
 ```
 #!/bin/bash
 
@@ -450,6 +458,7 @@ cakra IN A 10.76.1.5  ; IP Bedahulu' > /etc/bind/jarkom/sudarsana.it25.com
 Karena terjadi serangan DDOS oleh shikanoko nokonoko koshitantan (NUN), sehingga sistem komunikasinya terhalang. Untuk melindungi warga, kita diperlukan untuk membuat sistem peringatan dari siren man oleh Frekuensi Freak dan memasukkannya ke subdomain panah.pasopati.xxxx.com dalam folder panah dan pastikan dapat diakses secara mudah dengan menambahkan alias www.panah.pasopati.xxxx.com dan mendelegasikan subdomain tersebut ke Majapahit dengan alamat IP menuju radar di Kotalingga.
 
 #### Membuat script di Sriwijaya untuk mengubah isi file /etc/bind/jarkom/pasopati.it25.com di Sriwijaya untuk menambah subdomain panah
+Sriwijaya/Jarkom9.sh
 ```
 #!/bin/bash
 
@@ -488,6 +497,7 @@ service bind9 restart
 ```
 
 #### Membuat Script di Majapahit untuk membuat file baru untuk konfigurasi subdomain panah di pasopati.it25.com 
+Majapahit/Jarkom9.sh
 ```
 #!/bin/bash
 
@@ -540,6 +550,7 @@ service bind9 restart
 Markas juga meminta catatan kapan saja meme brain rot akan dijatuhkan, maka buatlah subdomain baru di subdomain panah yaitu log.panah.pasopati.xxxx.com serta aliasnya www.log.panah.pasopati.xxxx.com yang juga mengarah ke Kotalingga.
 
 #### Membuat script di Majapahit untuk memodifikasi file yang telah dibuat di nomor 9, yaitu /etc/bind/panah/panah.pasopati.it25.com di Majapahit. Script bertujuan untuk menambah domain log dan www.log
+>Majapahit/Jarkom10.sh
 ```
 #!/bin/bash
 
@@ -573,6 +584,7 @@ service bind9 restart
 Setelah pertempuran mereda, warga IT dapat kembali mengakses jaringan luar dan menikmati meme brainrot terbaru, tetapi hanya warga Majapahit saja yang dapat mengakses jaringan luar secara langsung. Buatlah konfigurasi agar warga IT yang berada diluar Majapahit dapat mengakses jaringan luar melalui DNS Server Majapahit.
 
 #### Membuat script di Sriwijaya agar semuanya dapat mengakses jaringan luar melalui DNS Sriwijaya
+>Sriwijaya/Jarkom11.sh
 ```
 #!/bin/bash
 
@@ -595,6 +607,7 @@ service bind9 restart
 ```
 
 ### Membuat script di Majapahit agar semuanya dapat mengakses jaringan luar melalui DNS Majapahit
+Majapahit/Jarkom11.sh
 ```
 #!/bin/bash
 
@@ -621,13 +634,213 @@ service bind9 restart
 ![image](https://github.com/user-attachments/assets/464361ce-4995-46d7-bd03-bf4e92d43994)
 ![image](https://github.com/user-attachments/assets/4e3d977b-c0f9-481e-9da1-065babcabc7f)
 
-soal 12
+## No.12
+### Menambahkan IP Kotalingga di Sriwijaya dan Majapahit
+> Sriwijaya, Majapahit / Jarkom12.sh
+```
+#!/bin/bash
+
+# Tambahkan nameserver Ip Kotalingga
+echo '
+nameserver 192.168.122.1
+nameserver 10.76.1.6' > /etc/resolv.conf
+```
+### Ini jelasin y
+> Kotalingga/Jarkom12.sh
+```
+#!/bin/bash
+
+# Tambahkan konfigurasi agar bisa deploy
+# Cek apakah apache2 sudah terinstal
+if ! command -v named &> /dev/null
+then
+    echo "Apache2 belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi apache2
+    apt-get update
+    apt-get install apache2 -y
+    apt-get install libapache2-mod-php7.0 -y
+else
+    echo "apache2 sudah terinstal."
+fi
+
+# Cek apakah unzip sudah terinstal
+if ! command -v named &> /dev/null
+then
+    echo "Unzip belum terinstal, melakukan instalasi..."
+    apt-get update
+    apt-get install unzip -y
+else
+    echo "unzip sudah terinstal."
+fi
+
+# Cek apakah php sudah terinstal
+if ! command -v named &> /dev/null
+then
+    echo "PHP belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi php
+    apt-get update
+    apt-get install php -y
+else
+    echo "php sudah terinstal."
+fi
+
+# Download file lb.zip
+curl -L -o lb.zip --insecure "https://drive.google.com/uc?export=download&id=1Sqf0TIiybYyUp5nyab4twy9svkgq8bi7"
+
+# Hapus file template
+rm -rf /var/www/html/index.php
+
+# Copy file index.php
+cp worker/index.php /var/www/html/index.php
+
+# Restart Apache2 service
+service apache2 restart
+```
+### Jelaskan ya nay
+> Hayamwuruk, Gajahmada, ThomasAlfaEdisom/Jarkom12.sh
+```
+#!/bin/bash
+
+# Tambahkan konfigurasi agar bisa membuka browser
+if ! command -v named &> /dev/null
+then
+    echo "Lynx belum terinstal, melakukan instalasi..."
+    apt-get update
+    apt-get install lynx -y
+else
+    echo "lynx sudah terinstal."
+fi
+```
+### Melakukan testing wlewlewle
+![image](https://github.com/user-attachments/assets/ab587c97-644b-48c7-a5ee-cd0e57862d74)
+
 ![image](https://github.com/user-attachments/assets/049c151c-1174-4495-91c3-f7b6a8ef7bc9)
 
 
-soal 13
+## No.13
+### Menambahkan IP Solok di Sriwijaya dan Majapahit
+> Sriwijaya, Majapahit/Jarkom13.sh
+```
+#!/bin/bash
+
+# Tambahkan nameserver Ip Solok
+echo '
+nameserver 192.168.122.1
+nameserver 10.76.2.3' > /etc/resolv.conf
+```
+
+### Jelasin y
+> Bedahulu, Tanjungkulai/Jarkom13.sh
+```
+#!/bin/bash
+
+# Tambahkan untuk keperluan load balancer
+# Cek apakah apache2 sudah terinstal
+if ! command -v named &> /dev/null
+then
+    echo "Apache2 belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi apache2
+    apt-get update
+    apt-get install apache2 -y
+    apt-get install libapache2-mod-php7.0 -y
+else
+    echo "apache2 sudah terinstal."
+fi
+
+# Cek apakah unzip sudah terinstal
+if ! command -v named &> /dev/null
+then
+    echo "Unzip belum terinstal, melakukan instalasi..."
+    apt-get update
+    apt-get install unzip -y
+else
+    echo "unzip sudah terinstal."
+fi
+
+# Cek apakah php sudah terinstal
+if ! command -v named &> /dev/null
+then
+    echo "PHP belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi php
+    apt-get update
+    apt-get install php -y
+else
+    echo "php sudah terinstal."
+fi
+
+# Download file lb.zip
+curl -L -o lb.zip --insecure "https://drive.google.com/uc?export=download&id=1Sqf0TIiybYyUp5nyab4twy9svkgq8bi7"
+
+# Unzip file lb.zip
+unzip lb.zip
+
+# Hapus file template
+rm -rf /var/www/html/index.php
+
+# Copy file index.php
+cp worker/index.php /var/www/html/index.php
+
+# Restart Apache2 service
+service apache2 restart
+```
+
+### Membuat script di Solok untuk.. untuk apa hayo
+> Solok/Jarkom13.sh
+```
+#!/bin/bash
+
+# Tambahkan keperluan untuk setting load balancer pada Mylta
+# Cek apakah apache2 sudah terinstal
+if ! command -v named &> /dev/null
+then
+    echo "Apache2 belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi apache2
+    apt-get update
+    apt-get install apache2 -y
+    apt-get install libapache2-mod-php7.0 -y
+else
+    echo "apache2 sudah terinstal."
+fi
+
+# Cek apakah php sudah terinstal
+if ! command -v named &> /dev/null
+then
+    echo "PHP belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi php
+    apt-get update
+    apt-get install php -y
+else
+    echo "php sudah terinstal."
+fi
+
+# Enable apache2 module
+a2enmod proxy_balancer
+a2enmod proxy_http
+a2enmod lbmethod_byrequests
+
+echo '
+<VirtualHost *:80>
+    <Proxy balancer://serverpool>
+        BalancerMember http://10.76.1.4/
+        BalancerMember http://10.76.1.5/
+        BalancerMember http://10.76.1.6/
+        Proxyset lbmethod=byrequests
+    </Proxy>
+
+    ProxyPass / balancer://serverpool/
+    ProxyPassReverse / balancer://serverpool/
+</VirtualHost>
+' > /etc/apache2/sites-available/000-default.conf
+
+service apache2 restart
+```
+
+### Testing loadbalancer kali ya tiap ngeping solok berubah ubah keren gak
+![image](https://github.com/user-attachments/assets/3eac6066-a726-4fc4-8af0-4daa56a423d1)
 ![Screenshot 2024-10-02 225728](https://github.com/user-attachments/assets/d79f5cd2-1a20-4ea7-801b-cd3fbc0a4d73)
+![image](https://github.com/user-attachments/assets/48163c2f-c9dd-4d47-ba34-a8a350497273)
 ![Screenshot 2024-10-02 225743](https://github.com/user-attachments/assets/4d569421-861e-4c52-a3f6-4e1e45766f77)
+![image](https://github.com/user-attachments/assets/1bb7ace2-8f25-43e0-9b0a-a32669284ff0)
 ![Screenshot 2024-10-02 225757](https://github.com/user-attachments/assets/c5e15094-b8b9-498f-95ac-044afa68941c)
 
 ## No. 14
