@@ -858,7 +858,7 @@ apt-get install nginx -y
 echo "upstream backend {
     server 10.76.1.4;
     server 10.76.1.5;
-    server 10.76.1.6
+    server 10.76.1.6;
 }
 
 server {
