@@ -291,8 +291,73 @@ host -t PTR 10.76.1.6
 ![Screenshot 2024-10-01 225451](https://github.com/user-attachments/assets/6468eb8b-ae55-4924-9698-7091e098c054)
 
 ## No. 7
-### Ayo kerjain nay
+Sriwijaya
+```
+#!/bin/bash
 
+echo '
+zone "sudarsana.it25.com" {
+        type master;
+        notify yes;
+        also-notify { 10.76.2.2; }; //IP Majapahit
+        allow-transfer { 10.76.2.2; }; //IP Majapahit
+        file "/etc/bind/jarkom/sudarsana.it25.com";
+};
+
+zone "pasopati.it25.com" {
+        type master;
+        notify yes;
+        also-notify { 10.76.2.2; }; //IP Majapahit
+        allow-transfer { 10.76.2.2; }; //IP Majapahit
+        file "/etc/bind/jarkom/pasopati.it25.com";
+};
+
+zone "rujapala.it25.com" {
+        type master;
+        notify yes;
+        also-notify { 10.76.2.2; }; //IP Majapahit
+        allow-transfer { 10.76.2.2; }; //IP Majapahit
+        file "/etc/bind/jarkom/rujapala.it25.com";
+};' > /etc/bind/named.conf.local
+
+service bind9 restart
+```
+Majapahit
+```
+#!/bin/bash
+
+# Cek apakah bind9 sudah terinstal
+if ! command -v named &> /dev/null
+then
+    echo "Bind9 belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi bind9
+    apt-get update
+    apt-get install bind9 -y
+else
+    echo "Bind9 sudah terinstal."
+fi
+
+echo '
+zone "sudarsana.it25.com" {
+    type slave;
+    masters { 10.76.1.2; }; // IP Sriwijaya
+    file "/var/lib/bind/sudarsana.it25.com";
+};
+
+zone "pasopati.it25.com" {
+    type slave;
+    masters { 10.76.1.2; }; // IP Sriwijaya
+    file "/var/lib/bind/pasopati.it25.com";
+};
+
+zone "rujapala.it25.com" {
+    type slave;
+    masters { 10.76.1.2; }; // IP Sriwijaya
+    file "/var/lib/bind/rujapala.it25.com";
+};' > /etc/bind/named.conf.local
+
+service bind9 restart
+```
 ## No. 8
 ### Membuat script untuk menambah line untuk menyetting subdomain "cakra" di /etc/bind/jarkom/sudarsana.it25.com
 ![image](https://github.com/user-attachments/assets/a744dcbe-f021-4b0e-a5d1-20c593ec26b3)
