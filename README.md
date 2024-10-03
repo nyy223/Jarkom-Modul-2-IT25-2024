@@ -942,3 +942,52 @@ service bind9 restart
 #### Tes lynx menggunakan domain www.solok.it25.com
 ![image](https://github.com/user-attachments/assets/0a3406ab-45f0-415b-bb36-1e47f1be8af1)
 ![image](https://github.com/user-attachments/assets/c2e7de0d-e9cc-47a7-b1ee-c289e2c10b58)
+
+## No.17
+### Membuat script untuk mengubah isi file /etc/sites-available/jarkom
+>Jarkom17.sh
+```
+# Hentikan service Apache2 dan instal Nginx
+service apache2 stop
+apt-get update
+apt-get install nginx -y
+
+# Konfigurasi Nginx untuk solok.it25.com hanya dapat diakses melalui port 31415 dan 2697
+echo "upstream backend {
+    server 10.76.1.4;
+    server 10.76.1.5;
+    server 10.76.1.6;
+}
+
+server {
+    listen 31415;
+    listen 2697;
+    server_name solok.it25.com www.solok.it25.com;
+
+    location / {
+        proxy_pass http://backend;
+    }
+}
+" > /etc/nginx/sites-available/jarkom
+
+# Aktifkan konfigurasi baru
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+
+# Hapus konfigurasi default
+rm /etc/nginx/sites-enabled/default
+
+# Restart service Nginx untuk menerapkan konfigurasi
+service nginx restart
+```
+
+### Tes lynx dengan port 31345
+![Screenshot 2024-10-03 121741](https://github.com/user-attachments/assets/6bbf5ab6-f416-423a-9dc5-2666eaa73ba2)
+![Screenshot 2024-10-03 121659](https://github.com/user-attachments/assets/4878c08b-a943-407a-9aa7-e82ce5894528)
+
+### Tes lynx dengan port 2697
+![image](https://github.com/user-attachments/assets/1f45ad2f-cd22-4361-bd57-c777c1bb7323)
+![image](https://github.com/user-attachments/assets/66cc3117-3fb1-454d-8980-21b81dcaeaf3)
+
+### Tes lynx dengan port selain 31345 dan 2697 (port 80)
+![image](https://github.com/user-attachments/assets/13a99e69-9263-48e7-a785-87d66318f98a)
+![image](https://github.com/user-attachments/assets/d10ec62c-f88b-49ac-b45a-3e2e1a55ca93)
