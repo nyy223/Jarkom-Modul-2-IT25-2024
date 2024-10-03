@@ -1067,4 +1067,132 @@ server {
 ## No.19
 Karena probset sudah kehabisan ide masuk ke salah satu worker buatkan akses direktori listing yang mengarah ke resource worker2.
 
-### Membuat script untuk 
+### Membuat script untuk mendownload file resource, melakukan unzip, dan memindah file ke var/www/html serta membuat konfigurasi nginx untuk dir-listing di Tanjungkulai (worker1). Script ini juga mengatur agar dir-listing hanya bisa ditampilkan di worker2 (Bedahulu) dengan hanya menerima IP dari Bedahulu
+
+>Tanjungkulai/Jarkom20.sh
+```
+#!/bin/bash
+
+# Tambahkan konfigurasi agar bisa deploy
+# Cek apakah NGINX sudah terinstal
+if ! command -v nginx &> /dev/null
+then
+    echo "NGINX belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi NGINX
+    apt-get update
+    apt-get install nginx -y
+else
+    echo "NGINX sudah terinstal."
+fi
+
+# Cek apakah unzip sudah terinstal
+if ! command -v unzip &> /dev/null
+then
+    echo "Unzip belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi unzip
+    apt-get update
+    apt-get install unzip -y
+else
+    echo "unzip sudah terinstal."
+fi
+
+# Cek apakah lynx sudah terinstal
+if ! command -v lynx &> /dev/null
+then
+    echo "Lynx belum terinstal, melakukan instalasi..."
+    # Melakukan instalasi lynx
+    apt-get update
+    apt-get install lynx -y
+else
+    echo "Lynx sudah terinstal."
+fi
+
+# 1. Download file dir-listing.zip dari Google Drive
+echo "Mengunduh file dir-listing.zip dari Google Drive..."
+curl -L -o dir-listing.zip --insecure "https://drive.google.com/uc?export=download&id=1JGk8b-tZgzAOnDqTx5B3F9qN6AyNs7Zy"
+
+# 2. Unzip file dir-listing.zip
+echo "Mengekstrak file dir-listing.zip ke direktori /var/www/html/..."
+unzip -o dir-listing.zip -d /var/www/html/
+
+# 3. Pastikan folder worker2 ada
+if [ ! -d "/var/www/html/dir-listing/worker2" ]; then
+    echo "Folder worker2 tidak ditemukan! Pastikan zip berisi folder yang benar"
+    exit 1
+fi
+
+# 4. Menambahkan konfigurasi NGINX untuk directory listing dari folder worker2
+NGINX_CONF="/etc/nginx/sites-available/dirlisting"
+echo "Menambahkan konfigurasi NGINX untuk directory listing dari folder worker2..."
+
+bash -c "cat > $NGINX_CONF <<EOL
+server {
+    listen 80;
+    server_name sekiantterimakasih.it25.com www.sekiantterimakasih.it25.com;
+
+    location / {
+        root /var/www/html/dir-listing/worker2;  # Arahkan ke folder worker2 di dalam dir-listing
+        autoindex on;  # Aktifkan directory listing
+        autoindex_exact_size off;  # Ukuran file tampil dalam format ringkas
+        autoindex_localtime on;  # Tampilkan waktu lokal
+        allow 10.76.1.5;  # Hanya mengizinkan akses dari Bedahulu
+        deny all;  # Menolak semua akses lainnya
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+}
+EOL"
+
+# 5. Aktifkan konfigurasi dan restart NGINX
+echo "Mengaktifkan konfigurasi NGINX..."
+ln -s $NGINX_CONF /etc/nginx/sites-enabled/
+service nginx restart
+```
+
+### Tes lynx dari Bedahulu
+![Screenshot 2024-10-04 023951](https://github.com/user-attachments/assets/7b7f00d1-b241-4cf3-80e4-2db170f92e3e)
+![Screenshot 2024-10-04 015136](https://github.com/user-attachments/assets/1d09d272-9013-448a-a769-29d8712cae3d)
+
+### Tes lynx dari selain Bedahulu
+![image](https://github.com/user-attachments/assets/092f8ae7-0f4d-4e03-91d3-bba29e439017)
+![Screenshot 2024-10-04 023814](https://github.com/user-attachments/assets/c6df956f-603f-4a5d-b624-5511702f1da5)
+
+## No.20
+Worker tersebut harus dapat di akses dengan sekiantterimakasih.xxxx.com dengan alias www.sekiantterimakasih.xxxx.com.
+
+### Membuat script untuk mengubah zone dari DNS Master dan Slave dan menambah IP dari Tanjungkulai di /etc/resolv.conf
+>Sriwijaya, Majapahit/Jarkom20.sh
+```
+# Zona untuk domain sekiantterimakasih.it25.com
+echo 'zone "sekiantterimakasih.it25.com" {
+    type master;
+    file "/etc/bind/jarkom/sekiantterimakasih.it25.com";
+};' >> /etc/bind/named.conf.local
+
+# File zona untuk sekiantterimakasih.it25.com
+echo -e '
+$TTL 604800
+@       IN      SOA     sekiantterimakasih.it25.com. sekiantterimakasih.solok.it25.com. (
+                            2         ; Serial
+                       604800         ; Refresh
+                        86400         ; Retry
+                      2419200         ; Expire
+                       604800 )       ; Negative Cache TTL
+
+@       IN      NS      sekiantterimakasih.it25.com.
+@       IN      A       10.76.1.4
+www     IN      CNAME   sekiantterimakasih.it25.com.
+' > /etc/bind/jarkom/sekiantterimakasih.it25.com
+
+echo '
+nameserver 10.76.2.3
+nameserver 10.76.1.4' > /etc/resolv.conf
+
+# Restart layanan BIND9
+service bind9 restart
+```
+
+### Pengetesan sekiantterimakasih.it25.com sudah dilakukan di nomor 19
