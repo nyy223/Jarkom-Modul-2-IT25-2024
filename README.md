@@ -984,6 +984,7 @@ service bind9 restart
 ![image](https://github.com/user-attachments/assets/c2e7de0d-e9cc-47a7-b1ee-c289e2c10b58)
 
 ## No.17
+Agar aman, buatlah konfigurasi agar solok.xxx.com hanya dapat diakses melalui port sebesar π x 10^4 = (phi nya desimal) dan 2000 + 2000 log 10 (10) +700 - π = ?.
 ### Membuat script untuk mengubah isi file /etc/sites-available/jarkom
 >Sriwijaya/Jarkom17.sh
 ```
@@ -1031,3 +1032,38 @@ service nginx restart
 ### Tes lynx dengan port selain 31345 dan 2697 (port 80)
 ![image](https://github.com/user-attachments/assets/13a99e69-9263-48e7-a785-87d66318f98a)
 ![image](https://github.com/user-attachments/assets/d10ec62c-f88b-49ac-b45a-3e2e1a55ca93)
+
+## No.18
+Apa bila ada yang mencoba mengakses IP solok akan secara otomatis dialihkan ke www.solok.xxxx.com.
+
+### Buat script untuk mengedit file /etc/nginx/sites-available/jarkom di Solok
+>Solok/Jarkom18.sh
+```
+echo "upstream backend {
+    server 10.76.1.4;
+    server 10.76.1.5;
+    server 10.76.1.6;
+}
+
+server {
+    listen 80;
+    server_name solok.it25.com www.solok.it25.com;
+
+    location / {
+        proxy_pass http://backend;
+    }
+
+    if ($host = 10.76.2.3) {
+        return 301 http://www.solok.IT25.com:31415$request_uri;
+    }
+}" > /etc/nginx/sites-available/jarkom
+
+ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
+rm /etc/nginx/sites-enabled/default
+service nginx restart
+```
+
+### Lakukan pengetesan di client
+![image](https://github.com/user-attachments/assets/92bf3da4-0a50-4336-86e9-847b0c066fdd)
+![image](https://github.com/user-attachments/assets/4096cb9a-760d-47f4-a627-17d2b4c2e9d7)
+
