@@ -1157,7 +1157,7 @@ service nginx restart
 ![Screenshot 2024-10-04 015136](https://github.com/user-attachments/assets/1d09d272-9013-448a-a769-29d8712cae3d)
 
 ### Tes lynx dari selain Bedahulu
-![image](https://github.com/user-attachments/assets/092f8ae7-0f4d-4e03-91d3-bba29e439017)
+![image](https://github.com/user-attachments/assets/807a1885-2265-4969-b006-6a2071ca962c)
 ![Screenshot 2024-10-04 023814](https://github.com/user-attachments/assets/c6df956f-603f-4a5d-b624-5511702f1da5)
 
 ## No.20
