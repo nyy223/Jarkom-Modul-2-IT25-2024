@@ -239,6 +239,7 @@ service bind9 restart
 Markas pusat meminta dibuatnya domain khusus untuk menaruh informasi persenjataan dan suplai yang tersebar. Informasi dan suplai meme terbaru tersebut mengarah ke Tanjungkulai dan domain yang ingin digunakan adalah rujapala.xxxx.com dengan alias www.rujapala.xxxx.com.
 
 #### Membuat domain yang mengarah ke Tanjungkulai dengan membuat script di Sriwijaya dengan konfigurasi seperti berikut:
+>Sriwijaya/Jarkom4.sh
 ```
 #!/bin/bash
 apt update
@@ -289,6 +290,7 @@ Pastikan domain-domain tersebut dapat diakses oleh seluruh komputer (client) yan
 Beberapa daerah memiliki keterbatasan yang menyebabkan hanya dapat mengakses domain secara langsung melalui alamat IP domain tersebut. Karena daerah tersebut tidak diketahui secara spesifik, pastikan semua komputer (client) dapat mengakses domain pasopati.xxxx.com melalui alamat IP Kotalingga (Notes: menggunakan pointer record).
 
 #### Buat script di Sriwijaya untuk membuat reverse DNS mengakses domain pasopati.it25.com melalui alamat IP 10.76.1.6
+>Sriwijaya/Jarkom6.sh
 ```
 #!/bin/bash
 
@@ -318,6 +320,7 @@ service bind9 restart
 ```
 
 #### Buat script untuk ditaruh di semua client
+>Hayamwuruk, ThomasAlfaEdison, GajahMada/Jarkom5.sh
 ```
 #!/bin/bash
 
@@ -344,6 +347,7 @@ host -t PTR 10.76.1.6
 Akhir-akhir ini seringkali terjadi serangan brainrot ke DNS Server Utama, sebagai tindakan antisipasi kamu diperintahkan untuk membuat DNS Slave di Majapahit untuk semua domain yang sudah dibuat sebelumnya yang mengarah ke Sriwijaya.
 
 #### Membuat script di Sriwijaya sebagai DNS Master dengan also-notify dan allow-transfer agar memberikan izin kepada IP Slave
+>Sriwijaya/Jarkom7.sh
 ```
 #!/bin/bash
 
@@ -375,6 +379,7 @@ zone "rujapala.it25.com" {
 service bind9 restart
 ```
 #### Membuat script di Majapahit sebagai DNS Slave
+Majapahit/Jarkom7.sh
 ```
 #!/bin/bash
 
@@ -422,6 +427,7 @@ Kamu juga diperintahkan untuk membuat subdomain khusus melacak kekuatan tersembu
 
 #### Membuat script di Sriwijaya untuk menambah line untuk menyetting subdomain "cakra" di /etc/bind/jarkom/sudarsana.it25.com
 ![image](https://github.com/user-attachments/assets/a744dcbe-f021-4b0e-a5d1-20c593ec26b3)
+>Sriwijaya/Jarkom8.sh
 ```
 #!/bin/bash
 
@@ -452,6 +458,7 @@ cakra IN A 10.76.1.5  ; IP Bedahulu' > /etc/bind/jarkom/sudarsana.it25.com
 Karena terjadi serangan DDOS oleh shikanoko nokonoko koshitantan (NUN), sehingga sistem komunikasinya terhalang. Untuk melindungi warga, kita diperlukan untuk membuat sistem peringatan dari siren man oleh Frekuensi Freak dan memasukkannya ke subdomain panah.pasopati.xxxx.com dalam folder panah dan pastikan dapat diakses secara mudah dengan menambahkan alias www.panah.pasopati.xxxx.com dan mendelegasikan subdomain tersebut ke Majapahit dengan alamat IP menuju radar di Kotalingga.
 
 #### Membuat script di Sriwijaya untuk mengubah isi file /etc/bind/jarkom/pasopati.it25.com di Sriwijaya untuk menambah subdomain panah
+>Sriwijaya/Jarkom9.sh
 ```
 #!/bin/bash
 
@@ -490,6 +497,7 @@ service bind9 restart
 ```
 
 #### Membuat Script di Majapahit untuk membuat file baru untuk konfigurasi subdomain panah di pasopati.it25.com 
+>Majapahit/Jarkom9.sh
 ```
 #!/bin/bash
 
@@ -542,6 +550,7 @@ service bind9 restart
 Markas juga meminta catatan kapan saja meme brain rot akan dijatuhkan, maka buatlah subdomain baru di subdomain panah yaitu log.panah.pasopati.xxxx.com serta aliasnya www.log.panah.pasopati.xxxx.com yang juga mengarah ke Kotalingga.
 
 #### Membuat script di Majapahit untuk memodifikasi file yang telah dibuat di nomor 9, yaitu /etc/bind/panah/panah.pasopati.it25.com di Majapahit. Script bertujuan untuk menambah domain log dan www.log
+Majapahit/Jarkom10.sh
 ```
 #!/bin/bash
 
@@ -575,6 +584,7 @@ service bind9 restart
 Setelah pertempuran mereda, warga IT dapat kembali mengakses jaringan luar dan menikmati meme brainrot terbaru, tetapi hanya warga Majapahit saja yang dapat mengakses jaringan luar secara langsung. Buatlah konfigurasi agar warga IT yang berada diluar Majapahit dapat mengakses jaringan luar melalui DNS Server Majapahit.
 
 #### Membuat script di Sriwijaya agar semuanya dapat mengakses jaringan luar melalui DNS Sriwijaya
+Sriwijaya/Jarkom11.sh
 ```
 #!/bin/bash
 
@@ -597,6 +607,7 @@ service bind9 restart
 ```
 
 ### Membuat script di Majapahit agar semuanya dapat mengakses jaringan luar melalui DNS Majapahit
+>Majapahit/Jarkom11.sh
 ```
 #!/bin/bash
 
@@ -627,6 +638,7 @@ service bind9 restart
 Karena pusat ingin sebuah laman web yang ingin digunakan untuk memantau kondisi kota lainnya maka deploy laman web ini (cek resource yg lb) pada Kotalingga menggunakan apache.
 
 #### Membuat script di DNS Master dan Slave untuk menambahkan IP Kotalingga 
+>Sriwijaya & Majapahit/Jarkom12.sh
 ```
 #!/bin/bash
 
@@ -636,6 +648,7 @@ nameserver 192.168.122.1
 nameserver 10.76.1.6' > /etc/resolv.conf
 ```
 #### Membuat script di client (HayamWuruk, GajahMada, ThomasAlfaEdison) untuk install lynx agar bisa membuka browser
+>HayamWuruk, GajahMada, ThomasAlfaEdison/Jarkom12.sh
 ```
 #!/bin/bash
 
@@ -651,6 +664,7 @@ else
 fi
 ```
 #### Membuat script di Kotalingga untuk install apache, php, dan file lb
+>Kotalingga/Jarkom12.sh
 ```
 #!/bin/bash
 
@@ -712,6 +726,7 @@ service apache2 restart
 Karena Sriwijaya dan Majapahit memenangkan pertempuran ini dan memiliki banyak uang dari hasil penjarahan (sebanyak 35 juta, belum dipotong pajak) maka pusat meminta kita memasang load balancer untuk membagikan uangnya pada web nya, dengan Kotalingga, Bedahulu, Tanjungkulai sebagai worker dan Solok sebagai Load Balancer menggunakan apache sebagai web server nya dan load balancer nya.
 
 #### Membuat script di DNS Master dan Slave untuk menambahkan IP Solok
+>Sriwijaya & Majapahit/Jarkom13.sh
 ```
 #!/bin/bash
 
@@ -721,6 +736,7 @@ nameserver 192.168.122.1
 nameserver 10.76.2.3' > /etc/resolv.conf
 ```
 #### Membuat script di webserver (Tanjungkulai, Bedahulu, Kotalingga) untuk install apache, php, dan file lb
+Tanjungkulai, Bedahulu, Kotalingga/Jarkom13.sh
 ```
 #!/bin/bash
 
@@ -774,6 +790,7 @@ cp worker/index.php /var/www/html/index.php
 service apache2 restart
 ```
 #### Membuat script di Solok untuk install apache dan php
+>Solok/Jarkom13.sh
 ```
 #!/bin/bash
 
@@ -833,6 +850,7 @@ Selama melakukan penjarahan mereka melihat bagaimana web server luar negeri, hal
 - Menginstall Nginx
 - Memasukkan config ke nginx/sites-available
 - Melakukan simlink dengan file konfigurasi dan menghapus file konfigurasi default
+>Solok/Jarkom14.sh
 ```
 service apache2 stop
 apt-get update
@@ -865,6 +883,7 @@ service nginx restart
 - Menginstall Nginx dan PHP
 - Memasukkan konfigurasi yang sudah di download ke konfigurasi php (var/wwww/jarkom/index.php)
 - Melakukan simlink untuk file konfigurasinya dan menghapus file konfigurasi default
+>Tanjungkulai, Bedahulu, Kotalingga/Jarkom14.sh
 ```
 service apache2 stop
 apt-get update
@@ -911,6 +930,7 @@ service nginx restart
 Karena dirasa kurang aman dari brainrot karena masih memakai IP, markas ingin akses ke Solok memakai solok.xxxx.com dengan alias www.solok.xxxx.com (sesuai web server terbaik hasil analisis kalian).
 
 #### Membuat script di Sriwijaya untuk membuat konfigurasi baru solok.it25.com dengan isi mirip seperti No.2 karena sama-sama memberi domain ke Solok
+Sriwijaya/Jarkom16.sh
 ```
 # Zona untuk domain solok.it25.com
 echo -e 'zone "solok.it25.com" {
@@ -947,7 +967,7 @@ service bind9 restart
 
 ## No.17
 ### Membuat script untuk mengubah isi file /etc/sites-available/jarkom
->Jarkom17.sh
+>Sriwijaya/Jarkom17.sh
 ```
 # Hentikan service Apache2 dan instal Nginx
 service apache2 stop
