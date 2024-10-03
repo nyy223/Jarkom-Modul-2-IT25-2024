@@ -1039,7 +1039,7 @@ Apa bila ada yang mencoba mengakses IP solok akan secara otomatis dialihkan ke w
 ### Buat script untuk mengedit file /etc/nginx/sites-available/jarkom di Solok
 >Solok/Jarkom18.sh
 ```
-echo "upstream backend {
+echo 'upstream backend {
     server 10.76.1.4;
     server 10.76.1.5;
     server 10.76.1.6;
@@ -1056,11 +1056,8 @@ server {
     if ($host = 10.76.2.3) {
         return 301 http://www.solok.IT25.com:31415$request_uri;
     }
-}" > /etc/nginx/sites-available/jarkom
+}' > /etc/nginx/sites-available/jarkom
 
-ln -s /etc/nginx/sites-available/jarkom /etc/nginx/sites-enabled/jarkom
-rm /etc/nginx/sites-enabled/default
-service nginx restart
 ```
 
 ### Lakukan pengetesan di client
